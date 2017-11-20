@@ -10,16 +10,16 @@
 #' of the curve?
 #' @param filename The filename of the roast profile
 #' @param labels Logical - plot labels or not
-#' @param delta Logical - plot delta bean temp or not.
+#' @param combined Logical - plot temp and delta on the same plot, or not.
+#' @param targets Logical - show temperature targets?
+#' @param degree The degree of the polynomial used for smoothing time.
 #' @name plotRoastProfile
 #' @export
 
-plotRoastProfile <- function(filename, labels = TRUE, delta = TRUE,
-                             degree = 8, combined = FALSE) {
-  # TODO I want time in minutes.
-  # TODO I am not sure the derivitive is correct - plus I want the unit for it
-  # to be F/min - at the moment it seems to be pretty crazy units. 877 is the
-  # max - that can't be F/min!
+plotRoastProfile <- function(filename, labels = TRUE, combined = FALSE,
+                             targets = TRUE, degree = 8) {
+  # TODO Add in the targets
+  # TODO Add in the milestones.
 
   x <- read.csv(filename)
   # Remove the pre-roast information.
@@ -62,6 +62,14 @@ plotRoastProfile <- function(filename, labels = TRUE, delta = TRUE,
         panel.grid.major.y = element_line(colour = "white"),
         panel.background = element_rect(fill = "lightgrey")
       )
+    if (targets) {
+      p <- p +
+          geom_point(aes(y = target),
+                       shape = 18,
+                       size = 3,
+                       colour = "hotpink",
+                       alpha = 0.6)
+    }
   } else {
     p2a <- ggplot2::ggplot(x, ggplot2::aes(x = total_seconds/60)) +
       ggplot2::geom_point(aes(y = temp),
@@ -75,10 +83,20 @@ plotRoastProfile <- function(filename, labels = TRUE, delta = TRUE,
       ggthemes::theme_tufte(base_family = "Helvetica") +
       theme(
         panel.grid.major.y = element_line(colour = "white"),
-        panel.background = element_rect(fill = "lightgrey")
+        panel.background = element_rect(fill = "lightgrey"),
+        axis.title.x = element_blank(),
+        axis.text.x = element_blank()
       ) +
-      xlab("Time (minutes)") +
       ylab("Temperature (F)")
+
+    if (targets) {
+      p2a <- p2a +
+        geom_point(aes(y = target),
+                   shape = 18,
+                   size = 3,
+                   colour = "hotpink",
+                   alpha = 0.6)
+    }
 
     p2b <- ggplot2::ggplot(x, ggplot2::aes(x = total_seconds/60)) +
       ggplot2::geom_smooth(aes(y = diff),

@@ -4,15 +4,19 @@
 \alias{plotRoastProfile}
 \title{plotRoastProfile}
 \usage{
-plotRoastProfile(filename, labels = TRUE, delta = TRUE, degree = 8,
-  combined = FALSE)
+plotRoastProfile(filename, labels = TRUE, combined = FALSE,
+  targets = TRUE, degree = 8)
 }
 \arguments{
 \item{filename}{The filename of the roast profile}
 
 \item{labels}{Logical - plot labels or not}
 
-\item{delta}{Logical - plot delta bean temp or not.}
+\item{combined}{Logical - plot temp and delta on the same plot, or not.}
+
+\item{targets}{Logical - show temperature targets?}
+
+\item{degree}{The degree of the polynomial used for smoothing time.}
 }
 \description{
 Plot a single roast profile - takes the filename of a filled out profile
