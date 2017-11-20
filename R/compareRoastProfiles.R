@@ -51,30 +51,30 @@ compareRoastProfiles <- function(file_list, degree = 8, names = NULL) {
     ggplot2::geom_point(data = subset(temps, variable == "temp"),
                         ggplot2::aes(y = value), alpha = 0.5) +
     viridis::scale_colour_viridis(discrete = TRUE) +
-    coord_cartesian(ylim = c(0, 450)) +
+    ggplot2::coord_cartesian(ylim = c(0, 450)) +
     ggthemes::theme_tufte(base_family = "Helvetica") +
-    theme(
-      panel.grid.major.y = element_line(colour = "white"),
-      panel.background = element_rect(fill = "lightgrey"),
-      axis.title.x = element_blank(),
-      axis.text.x = element_blank()
+    ggplot2::theme(
+      panel.grid.major.y = ggplot2::element_line(colour = "white"),
+      panel.background = ggplot2::element_rect(fill = "lightgrey"),
+      axis.title.x = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_blank()
     ) +
-    scale_x_continuous(breaks = seq(0, max(temps$time), 1))
-    ylab("Temperature (F)")
+    ggplot2::scale_x_continuous(breaks = seq(0, max(temps$time), 1))
+    ggplot2::ylab("Temperature (F)")
 
   p2 <- ggplot2::ggplot(diffs, ggplot2::aes(x = time, colour = L1)) +
     ggplot2::geom_line(ggplot2::aes(y = value), alpha = 0.3) +
     ggplot2::geom_smooth(ggplot2::aes(y = value), method = "loess", se = FALSE) +
-    coord_cartesian(ylim = c(0, 100)) +
+    ggplot2::coord_cartesian(ylim = c(0, 100)) +
     viridis::scale_colour_viridis(discrete = TRUE) +
     ggthemes::theme_tufte(base_family = "Helvetica") +
-    theme(
-      panel.grid.major.y = element_line(colour = "white"),
-      panel.background = element_rect(fill = "lightgrey")
+    ggplot2::theme(
+      panel.grid.major.y = ggplot2::element_line(colour = "white"),
+      panel.background = ggplot2::element_rect(fill = "lightgrey")
     ) +
-    scale_x_continuous(breaks = seq(0, max(diffs$time), 1)) +
-    xlab("Time (minutes)") +
-    ylab("F/min")
+    ggplot2::scale_x_continuous(breaks = seq(0, max(diffs$time), 1)) +
+    ggplot2::xlab("Time (minutes)") +
+    ggplot2::ylab("F/min")
 
   grid::grid.newpage()
   grid::grid.draw(rbind(ggplot2::ggplotGrob(p1),

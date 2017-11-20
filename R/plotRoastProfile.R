@@ -41,31 +41,31 @@ plotRoastProfile <- function(filename, labels = TRUE, combined = FALSE,
   # p1 - all on same plot.
   if (combined) {
     p <- ggplot2::ggplot(x, ggplot2::aes(x = total_seconds/60)) +
-      ggplot2::geom_point(aes(y = temp),
+      ggplot2::geom_point(ggplot2::aes(y = temp),
                          lwd = 0.8,
                          colour = viridis::viridis(5)[1],
                          alpha = 0.8) +
-      ggplot2::geom_line(aes(y = fitted_temp),
+      ggplot2::geom_line(ggplot2::aes(y = fitted_temp),
                          lwd = 0.8,
                          colour = viridis::viridis(5)[2]) +
-      ggplot2::geom_smooth(aes(y = diff * 3),
+      ggplot2::geom_smooth(ggplot2::aes(y = diff * 3),
                          colour = viridis::viridis(5)[3],
                          se = FALSE, method = "loess") +
       ggplot2::geom_line(aes(y = diff * 3),
                            colour = viridis::viridis(5)[4]) +
-      xlab("Time (minutes)") +
-      ylab("Temperature (F)") +
-      scale_y_continuous(sec.axis = ggplot2::sec_axis(~ . / 3, name = "F/min")) +
-      coord_cartesian(ylim = c(0, 450)) +
+      ggplot2::xlab("Time (minutes)") +
+      ggplot2::ylab("Temperature (F)") +
+      ggplot2::scale_y_continuous(sec.axis = ggplot2::sec_axis(~ . / 3, name = "F/min")) +
+      ggplot2::coord_cartesian(ylim = c(0, 450)) +
       ggthemes::theme_tufte(base_family = "Helvetica") +
-      theme(
-        panel.grid.major.y = element_line(colour = "white"),
-        panel.background = element_rect(fill = "lightgrey")
+      ggplot2::theme(
+        panel.grid.major.y = ggplot2::element_line(colour = "white"),
+        panel.background = ggplot2::element_rect(fill = "lightgrey")
       ) +
       scale_x_continuous(breaks = seq(0, max(x$time), 1))
     if (targets) {
       p <- p +
-          geom_point(aes(y = target),
+        ggplot2::geom_point(ggplot2::aes(y = target),
                        shape = 18,
                        size = 3,
                        colour = "hotpink",
@@ -73,27 +73,27 @@ plotRoastProfile <- function(filename, labels = TRUE, combined = FALSE,
     }
   } else {
     p2a <- ggplot2::ggplot(x, ggplot2::aes(x = total_seconds/60)) +
-      ggplot2::geom_point(aes(y = temp),
+      ggplot2::geom_point(ggplot2::aes(y = temp),
                           lwd = 0.8,
                           colour = viridis::viridis(5)[1],
                           alpha = 0.8) +
-      ggplot2::geom_line(aes(y = fitted_temp),
+      ggplot2::geom_line(ggplot2::aes(y = fitted_temp),
                          lwd = 0.8,
                          colour = viridis::viridis(5)[2]) +
-      coord_cartesian(ylim = c(0, 450)) +
+      ggplot2::coord_cartesian(ylim = c(0, 450)) +
       ggthemes::theme_tufte(base_family = "Helvetica") +
-      theme(
-        panel.grid.major.y = element_line(colour = "white"),
-        panel.background = element_rect(fill = "lightgrey"),
-        axis.title.x = element_blank(),
-        axis.text.x = element_blank()
+      ggplot2::theme(
+        panel.grid.major.y = ggplot2::element_line(colour = "white"),
+        panel.background = ggplot2::element_rect(fill = "lightgrey"),
+        axis.title.x = ggplot2::element_blank(),
+        axis.text.x = ggplot2::element_blank()
       ) +
-      ylab("Temperature (F)") +
-      scale_x_continuous(breaks = seq(0, max(x$time), 1))
+      ggplot2::ylab("Temperature (F)") +
+      ggplot2::scale_x_continuous(breaks = seq(0, max(x$time), 1))
 
     if (targets) {
       p2a <- p2a +
-        geom_point(aes(y = target),
+        ggplot2::geom_point(ggplot2::aes(y = target),
                    shape = 18,
                    size = 3,
                    colour = "hotpink",
@@ -101,21 +101,21 @@ plotRoastProfile <- function(filename, labels = TRUE, combined = FALSE,
     }
 
     p2b <- ggplot2::ggplot(x, ggplot2::aes(x = total_seconds/60)) +
-      ggplot2::geom_smooth(aes(y = diff),
+      ggplot2::geom_smooth(ggplot2::aes(y = diff),
                            colour = viridis::viridis(5)[3],
                            se = FALSE,
                            method = "loess") +
-      ggplot2::geom_line(aes(y = diff),
+      ggplot2::geom_line(ggplot2::aes(y = diff),
                          colour = viridis::viridis(5)[4]) +
       ggthemes::theme_tufte(base_family = "Helvetica") +
-      theme(
-        panel.grid.major.y = element_line(colour = "white"),
-        panel.background = element_rect(fill = "lightgrey")
+      ggplot2::theme(
+        panel.grid.major.y = ggplot2::element_line(colour = "white"),
+        panel.background = ggplot2::element_rect(fill = "lightgrey")
       )+
-      coord_cartesian(ylim = c(0, 100)) +
-      xlab("Time (minutes)") +
-      ylab("F/min") +
-      scale_x_continuous(breaks = seq(0, max(x$time), 1))
+      ggplot2::coord_cartesian(ylim = c(0, 100)) +
+      ggplot2::xlab("Time (minutes)") +
+      ggplot2::ylab("F/min") +
+      ggplot2::scale_x_continuous(breaks = seq(0, max(x$time), 1))
   }
 
   if (combined) {
