@@ -59,6 +59,7 @@ compareRoastProfiles <- function(file_list, degree = 8, names = NULL) {
       axis.title.x = element_blank(),
       axis.text.x = element_blank()
     ) +
+    scale_x_continuous(breaks = seq(0, max(temps$time), 1))
     ylab("Temperature (F)")
 
   p2 <- ggplot2::ggplot(diffs, ggplot2::aes(x = time, colour = L1)) +
@@ -71,6 +72,7 @@ compareRoastProfiles <- function(file_list, degree = 8, names = NULL) {
       panel.grid.major.y = element_line(colour = "white"),
       panel.background = element_rect(fill = "lightgrey")
     ) +
+    scale_x_continuous(breaks = seq(0, max(diffs$time), 1)) +
     xlab("Time (minutes)") +
     ylab("F/min")
 

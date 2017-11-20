@@ -61,7 +61,8 @@ plotRoastProfile <- function(filename, labels = TRUE, combined = FALSE,
       theme(
         panel.grid.major.y = element_line(colour = "white"),
         panel.background = element_rect(fill = "lightgrey")
-      )
+      ) +
+      scale_x_continuous(breaks = seq(0, max(x$time), 1))
     if (targets) {
       p <- p +
           geom_point(aes(y = target),
@@ -87,7 +88,8 @@ plotRoastProfile <- function(filename, labels = TRUE, combined = FALSE,
         axis.title.x = element_blank(),
         axis.text.x = element_blank()
       ) +
-      ylab("Temperature (F)")
+      ylab("Temperature (F)") +
+      scale_x_continuous(breaks = seq(0, max(x$time), 1))
 
     if (targets) {
       p2a <- p2a +
@@ -112,7 +114,8 @@ plotRoastProfile <- function(filename, labels = TRUE, combined = FALSE,
       )+
       coord_cartesian(ylim = c(0, 100)) +
       xlab("Time (minutes)") +
-      ylab("F/min")
+      ylab("F/min") +
+      scale_x_continuous(breaks = seq(0, max(x$time), 1))
   }
 
   if (combined) {
