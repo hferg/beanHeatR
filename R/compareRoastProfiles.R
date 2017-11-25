@@ -7,7 +7,8 @@
 #' @name compareRoastProfiles
 #' @export
 
-compareRoastProfiles <- function(file_list, degree = 8, names = NULL) {
+compareRoastProfiles <- function(file_list, degree = 8, names = NULL,
+                                 method = "lm") {
 
   loadAndDiff <- function(filename, degree) {
     x <- read.csv(filename)
@@ -46,8 +47,6 @@ compareRoastProfiles <- function(file_list, degree = 8, names = NULL) {
   diffs <- subset(x, type == "rate")
 
   p1 <- ggplot2::ggplot(temps, ggplot2::aes(x = time, colour = L1)) +
-    ggplot2::geom_line(data = subset(temps, variable == "fitted_temp"),
-                       ggplot2::aes(y = value), lwd = 1.2) +
     ggplot2::geom_point(data = subset(temps, variable == "temp"),
                         ggplot2::aes(y = value), alpha = 0.5) +
     viridis::scale_colour_viridis(discrete = TRUE) +
@@ -61,6 +60,17 @@ compareRoastProfiles <- function(file_list, degree = 8, names = NULL) {
     ) +
     ggplot2::scale_x_continuous(breaks = seq(0, max(temps$time), 1))
     ggplot2::ylab("Temperature (F)")
+
+    if (method == "lm") {
+      p1 <- p1 +
+        ggplot2::geom_line(data = subset(temps, variable == "fitted_temp"),
+                                      ggplot2::aes(y = value), lwd = 1.2)
+    } else if (method == "smooth") {
+      p1 <- p1 +
+        ggplot2::geom_smooth(data = subset(temps, variable == "temp"),
+                             ggplot2::aes(y = value), lwd = 1.2,
+                             se = FALSE)
+    }
 
   p2 <- ggplot2::ggplot(diffs, ggplot2::aes(x = time, colour = L1)) +
     ggplot2::geom_line(ggplot2::aes(y = value), alpha = 0.3) +
